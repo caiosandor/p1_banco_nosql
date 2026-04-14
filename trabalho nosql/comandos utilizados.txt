@@ -1,0 +1,77 @@
+docker run -d -p 27017:27017 --name mongo-server mongo - para criar o container 
+
+A execução dos comandos abaixo foi feita utilizando o mongodb shell do próprio MongoDB Compass.
+
+use escola - para utilizar o banco 
+
+db.alunos.insertMany([
+  {
+    "nome": "João Silva",
+    "idade": 20,
+    "curso": "ADS",
+    "notas": [7, 8, 9],
+    "endereco": {
+      "cidade": "Maricá",
+      "estado": "RJ"
+    }
+  },
+  {
+    "nome": "Maria Santos",
+    "idade": 22,
+    "curso": "Engenharia de Software",
+    "notas": [9, 9, 10],
+    "endereco": {
+      "cidade": "Niterói",
+      "estado": "RJ"
+    }
+  },
+  {
+    "nome": "Carlos Eduardo",
+    "idade": 19,
+    "curso": "ADS",
+    "notas": [6, 7, 8],
+    "endereco": {
+      "cidade": "Maricá",
+      "estado": "RJ"
+    }
+  },
+  {
+    "nome": "Ana Clara",
+    "idade": 23,
+    "curso": "Redes de Computadores",
+    "notas": [8, 8, 7],
+    "endereco": {
+      "cidade": "Rio de Janeiro",
+      "estado": "RJ"
+    }
+  },
+  {
+    "nome": "caio sandor",
+    "idade": 25,
+    "curso": "Engenharia de Software",
+    "notas": [1, 3, 4],
+    "endereco": {
+      "cidade": "Maricá",
+      "estado": "RJ"
+    }
+  }
+])
+ - para adicionar os alunos e suas características
+
+db.alunos.find() - para buscar todos os alunos
+
+db.alunos.find({ curso: "ADS" }) - para buscar alunos no curso de ADS
+
+db.alunos.find({ idade: { $gt: 21 } }) - para buscar alunos com mais de 21 alunos
+
+db.alunos.updateOne({ nome: "João Silva" },{ $set: { idade: 21 } }) - para atualizar a idade de um alunos
+
+db.alunos.updateOne({ nome: "João Silva" },{ $push: { notas: 10 } }) - para adicionar mais uma nota a um aluno
+
+db.alunos.deleteOne({ nome: "Pedro Alves" }) - para deletar um aluno
+
+db.alunos.aggregate([{$project: {nome: 1,media: { $avg: "$notas" }}}]) - para mostrar a media de notas por aluno
+
+db.alunos.aggregate([{$group: {_id: "$curso",quantidade: { $sum: 1 }}}]) - para mostrar a quantidade de alunos por curso
+
+db.adminCommand("ping") - para garantir se o banco esta integrado com o docker
